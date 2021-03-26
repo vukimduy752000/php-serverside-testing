@@ -11,7 +11,7 @@ if (!isset($page_title)) {
 
     <head>
         <title>
-            <?php echo $page_title; ?>
+            <?php echo htmlspecialchars($page_title); ?>
         </title>
         <meta charset="utf-8">
         <link rel="stylesheet" href="<?php echo url_for("/stylesheets/staff.css") ?>">
