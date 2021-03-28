@@ -1,4 +1,6 @@
 <?php
+ob_start();
+
 
 //  |===============================================/ 
 //  | Assign file paths to PHP constants
