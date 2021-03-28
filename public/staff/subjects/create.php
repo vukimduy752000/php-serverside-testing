@@ -1,8 +1,11 @@
 <?php
-
-$position = $_POST["position"];
-$menu_name = $_POST["menu_name"];
-$visible = $_POST["visible"];
+require_once("../../../private/initialize.php");
 
 
-echo $position . $menu_name . $visible;
+if (is_request("post")) {
+    $position = isset($_POST["position"]) ?? "Unknown";
+    $menu_name = $_POST["menu_name"];
+    $visible = $_POST["visible"];
+} else {
+    redirect_page_to(url_for("/staff/subjects/new.php"));
+}

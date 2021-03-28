@@ -24,3 +24,8 @@ function redirect_page_to(string $location)
     header("Location: " . $location);
     exit("Page has been redirect successfully");
 }
+
+function is_request(string $request_type)
+{
+    return $_SERVER["REQUEST_METHOD"] == strtoupper($request_type);
+}
