@@ -17,6 +17,10 @@ $pages = [
     <div id=content>
         <div id="main-menu">
             <h1>Pages</h1>
+            <div class="actions">
+                <a href="<?php echo url_for("/staff/pages/create_page.php"); ?>">Create New Page</a>
+            </div>
+
             <table class="list">
                 <tr>
                     <th>ID</th>
