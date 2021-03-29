@@ -24,8 +24,10 @@ $pages = [
             <table class="list">
                 <tr>
                     <th>ID</th>
-                    <th>Page name</th>
-                    <th>isActive</th>
+                    <th>Position</th>
+                    <th>Visible</th>
+                    <th>Name</th>
+                    <th>Content</th>
                     <th>&nbsp;</th>
                     <th>&nbsp;</th>
                     <th>&nbsp;</th>
