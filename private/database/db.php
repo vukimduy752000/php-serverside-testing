@@ -29,6 +29,7 @@ function db_confirm_connection()
     }
 }
 
+
 /** Check the returned result from the query */
 function db_confirm_query($result)
 {

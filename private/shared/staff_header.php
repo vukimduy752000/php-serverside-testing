@@ -14,8 +14,7 @@ if (!isset($page_title)) {
             <?php echo htmlspecialchars($page_title); ?>
         </title>
         <meta charset="utf-8">
-        <link rel="stylesheet" href="<?php echo url_for("/stylesheets/staff.css") ?>">
-    </head>
+        <link type="text/css" rel="stylesheet" href="<?php echo url_for("/stylesheets/staff.css") ?>">
 
     <body>
         <header>

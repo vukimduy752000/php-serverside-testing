@@ -4,12 +4,7 @@
 <?php include(SHARED_PATH . "/staff_header.php"); ?>
 
 <?php
-$pages = [
-    ["id" => 1, "page_name" => "NSW", "isActive" => 1],
-    ["id" => 2, "page_name" => "ANZ", "isActive" => 0],
-    ["id" => 3, "page_name" => "CommonwealthBank", "isActive" => 1],
-    ["id" => 4, "page_name" => "GeogreBank", "isActive" => 0],
-]
+$pages = query_all_values_order_by("pages", "position");
 ?>
 
 <!-- MAIN -->
@@ -24,20 +19,22 @@ $pages = [
             <table class="list">
                 <tr>
                     <th>ID</th>
+                    <th>Menu Name</th>
                     <th>Position</th>
-                    <th>Visible</th>
-                    <th>Name</th>
                     <th>Content</th>
+                    <th>Visible</th>
                     <th>&nbsp;</th>
                     <th>&nbsp;</th>
                     <th>&nbsp;</th>
                 </tr>
 
-                <?php foreach ($pages as $page) { ?>
+                <?php while ($page = mysqli_fetch_assoc($pages)) { ?>
                 <tr>
                     <td><?php echo htmlspecialchars($page['id']); ?></td>
-                    <td><?php echo htmlspecialchars($page['page_name']); ?></td>
-                    <td><?php echo $page['isActive'] == 1 ? 'active' : 'inactive'; ?></td>
+                    <td><?php echo htmlspecialchars($page['menu_name']); ?></td>
+                    <td><?php echo htmlspecialchars($page['position']); ?></td>
+                    <td><?php echo htmlspecialchars($page['content']); ?></td>
+                    <td><?php echo $page['visible'] == 1 ? 'active' : 'inactive'; ?></td>
                     <td><a class="action"
                             href=" <?php echo url_for("/staff/pages/show.php?id=" . htmlspecialchars(urlencode($page["id"]))); ?>">View
                             Page</a>
@@ -46,6 +43,9 @@ $pages = [
                     <td><a class="action" href="">Delete</a></td>
                 </tr>
                 <?php } ?>
+
+                <?php mysqli_free_result($pages); ?>
+
             </table>
         </div>
     </div>

@@ -6,13 +6,15 @@ $page_name  = "";
 $active     = "";
 
 if (is_request("post")) {
-    $page_name  = $_POST["page_name"] ?? "";
-    $active     = $_POST["is_active"] ?? "";
+    $page_name  = $_POST["menu_name"] ?? "";
+    $position     = $_POST[""] ?? "";
+
 
     echo "Form Submitted </br>";
     echo "Page Name: " . $page_name . "</br>";
     echo "Is Active: " . $active . "</br>";
 }
+
 
 ?>
 <?php include(SHARED_PATH . "/staff_header.php"); ?>

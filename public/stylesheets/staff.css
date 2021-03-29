@@ -23,6 +23,11 @@ header {
     color: white;
 }
 
+header a:visited,
+header a:link {
+    color: white;
+}
+
 header h1 {
     font-family: Verdana, Arial, Helvetica, sans-serif;
     text-align: center;
