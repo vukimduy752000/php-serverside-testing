@@ -27,7 +27,7 @@ $subjects_set = query_all_values_order_by("subjects", "position");
                     <th>&nbsp;</th>
                 </tr>
 
-                <?php while ($subject = mysqli_fetch_assoc($subjects_set)) { ?>
+                <?php foreach ($subjects_set as $subject) { ?>
                 <tr>
                     <td><?php echo $subject['id']; ?></td>
                     <td><?php echo $subject['position']; ?></td>
@@ -42,9 +42,6 @@ $subjects_set = query_all_values_order_by("subjects", "position");
                 </tr>
                 <?php } ?>
             </table>
-            <?php
-            mysqli_free_result($subjects_set);
-            ?>
         </div>
     </div>
 </main>
