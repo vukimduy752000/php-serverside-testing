@@ -1,21 +1,20 @@
 <?php
 
 require_once("../../../private/initialize.php");
-$test = $_GET['test'];
 
-switch ($test) {
-    case "404":
-        error_404();
-        break;
-    case "500":
-        error_500();
-        break;
-    case "redirect":
-        redirect_page_to(url_for("/staff/subjects/index.php"));
-        break;
-    default:
-        echo "No error";
+if (is_request("post")) {
+    $menu_name = $_POST["menu_name"] ?? "";
+    $position = $_POST["position"] ?? "";
+    $visible = $_POST["visible"] ?? "";
+
+    if (insert_subject("subjects", $menu_name, $position, $visible)) {
+        $new_id = mysqli_insert_id($db);
+        redirect_page_to(url_for("/staff/subjects/create_subject.php?id=" . secure_http($new_id)));
+    } else {
+        redirect_page_to(url_for("/staff/subjects/new.php"));
+    }
 }
+
 ?>
 <?php $page_title = 'Create Subject'; ?>
 <?php include(SHARED_PATH . '/staff_header.php'); ?>
@@ -29,7 +28,7 @@ switch ($test) {
     <div class="subject new">
         <h1>Create Subject</h1>
 
-        <form action=" <?php echo url_for("/staff/subjects/create.php") ?>" method="post">
+        <form action=" <?php echo url_for("/staff/subjects/create_subject.php") ?>" method="post">
             <dl>
                 <dt>Menu Name</dt>
                 <dd><input type="text" name="menu_name" value="" /></dd>
