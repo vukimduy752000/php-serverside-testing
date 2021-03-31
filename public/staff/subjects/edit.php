@@ -4,7 +4,7 @@
 
 <?php
 
-$id        = $_GET["id"] ?? "";
+$id = $_GET["id"] ?? "";
 
 // POST information into the database
 if (is_request("post")) {
@@ -19,7 +19,6 @@ if (is_request("post")) {
 } else {
     $subject = query_find_value_by_id("subjects", $id);
 }
-
 
 ?>
 
@@ -40,15 +39,17 @@ if (is_request("post")) {
                 <dt>Position</dt>
                 <dd>
                     <select name="position">
-                        <option value="1" <?php if ($subject["position"] == 1) {
-                                                echo "selected";
-                                            } ?>>1</option>
-                        <option value="2" <?php if ($subject["position"] == 2) {
-                                                echo "selected";
-                                            } ?>>2</option>
-                        <option value="3" <?php if ($subject["position"] == 3) {
-                                                echo "selected";
-                                            } ?>>3</option>
+                        <?php
+                        for ($i = 1; $i <= query_quantity_row_count_condition("subjects", "position"); $i++) {
+                            $option = "";
+                            $option .= "<option value=\"{$i}\"";
+                            if ($i == ($subject["position"])) {
+                                $option .= " selected";
+                            }
+                            $option .= ">{$i}</option>";
+                            echo $option;
+                        }
+                        ?>
                     </select>
                 </dd>
             </dl>

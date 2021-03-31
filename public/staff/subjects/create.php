@@ -14,9 +14,10 @@ if (is_request("post")) {
         redirect_page_to(url_for("/staff/subjects/index.php"));
     }
 } else {
+    // Set subject postion is the count(row) + 1 by default
     $subject = [
         "menu_name" => "",
-        "position"  => "",
+        "position"  => query_quantity_row_count_condition("subjects", "position") + 1,
         "visible"   => ""
     ];
 }
@@ -43,21 +44,17 @@ if (is_request("post")) {
                 <dt>Position</dt>
                 <dd>
                     <select name="position">
-
                         <?php
-
-                        for ($i = 1; $i <= query_quantity_row_count_condition("subjects", "position"); $i++) {
+                        for ($i = 1; $i <= $subject["position"]; $i++) {
                             $option = "";
                             $option .= "<option value=\"{$i}\"";
+                            if ($i == ($subject["position"])) {
+                                $option .= " selected";
+                            }
                             $option .= ">{$i}</option>";
                             echo $option;
                         }
-
-
                         ?>
-                        <!-- <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option> -->
                     </select>
                 </dd>
             </dl>
