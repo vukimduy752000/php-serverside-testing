@@ -11,7 +11,7 @@ function query_all_values_order_by($table, $orderby)
 }
 
 /** QUERY VALUE DEPEND ON CONDITION */
-function find_value_by_id($table, $value)
+function query_find_value_by_id($table, $value)
 {
     global $db;
     $query  =  "SELECT * FROM $table 
@@ -24,7 +24,7 @@ function find_value_by_id($table, $value)
 }
 
 /** INSERT NEW SUBJECT */
-function insert_subject($table, $menu_name, $position, $visible)
+function query_insert_subject($table, $menu_name, $position, $visible)
 {
     global $db;
     $query  = "INSERT INTO $table (menu_name, position, visible) ";
@@ -39,6 +39,35 @@ function insert_subject($table, $menu_name, $position, $visible)
     db_confirm_query($response);
 
     if ($response) {
+        return true;
+    } else {
+        echo mysqli_error($db);
+        db_disconnect($db);
+        exit();
+    }
+}
+
+/** UPDATE SUBJECT  */
+function query_update_value_where_id($table, $assoc_object)
+{
+    global $db;
+    $query  = "UPDATE $table ";
+    $query .= "SET ";
+
+    // Using loop to iterate 
+    $last_key = array_key_last($assoc_object);
+    foreach ($assoc_object as $key => $value) {
+        $query .= "$key='" . $value . "',";
+        if ($key == $last_key) {
+            $query[strlen($query) - 1] = " ";
+        }
+    }
+
+    $query .= "WHERE id='" . $assoc_object["id"] . "'";
+    $result = mysqli_query($db, $query);
+
+    // RESULT form UPDATE will return true/false
+    if ($result) {
         return true;
     } else {
         echo mysqli_error($db);

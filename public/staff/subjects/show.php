@@ -5,7 +5,7 @@ include_once(SHARED_PATH . "/staff_header.php");
 
 <?php
 $id = $_GET['id'] ?? '1';
-$subject = find_value_by_id("subjects", $id);
+$subject = query_find_value_by_id("subjects", $id);
 ?>
 
 <!-- HTMl -->

@@ -7,11 +7,11 @@ if (is_request("post")) {
     $position = $_POST["position"] ?? "";
     $visible = $_POST["visible"] ?? "";
 
-    if (insert_subject("subjects", $menu_name, $position, $visible)) {
+    if (query_insert_subject("subjects", $menu_name, $position, $visible)) {
         $new_id = mysqli_insert_id($db);
-        redirect_page_to(url_for("/staff/subjects/create_subject.php?id=" . secure_http($new_id)));
+        redirect_page_to(url_for("/staff/subjects/show.php?id=" . secure_http($new_id)));
     } else {
-        redirect_page_to(url_for("/staff/subjects/new.php"));
+        redirect_page_to(url_for("/staff/subjects/index.php"));
     }
 }
 
@@ -38,6 +38,8 @@ if (is_request("post")) {
                 <dd>
                     <select name="position">
                         <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
                     </select>
                 </dd>
             </dl>
