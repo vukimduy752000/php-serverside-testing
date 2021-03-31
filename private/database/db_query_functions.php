@@ -89,3 +89,17 @@ function query_update_value_where_id($table, $assoc_object)
         exit();
     }
 }
+
+/** QUERY QUANTITY OF ROW COUNT BY SPECIFIC CONDITION */
+function query_quantity_row_count_condition($table, $condition)
+{
+    global $db;
+    $query = "SELECT COUNT($condition) FROM $table";
+    $result_set = mysqli_query($db, $query);
+    $result = mysqli_fetch_row($result_set);
+
+    db_confirm_query($result_set);
+    mysqli_free_result($result_set);
+
+    return $result[0];
+}

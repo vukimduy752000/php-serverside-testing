@@ -34,7 +34,7 @@ if (is_request("post")) {
     <div class="subject new">
         <h1>Create Subject</h1>
 
-        <form action=" <?php echo url_for("/staff/subjects/create_subject.php") ?>" method="post">
+        <form action=" <?php echo url_for("/staff/subjects/create.php") ?>" method="post">
             <dl>
                 <dt>Menu Name</dt>
                 <dd><input type="text" name="menu_name" /></dd>
@@ -43,9 +43,21 @@ if (is_request("post")) {
                 <dt>Position</dt>
                 <dd>
                     <select name="position">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
+
+                        <?php
+
+                        for ($i = 1; $i <= query_quantity_row_count_condition("subjects", "position"); $i++) {
+                            $option = "";
+                            $option .= "<option value=\"{$i}\"";
+                            $option .= ">{$i}</option>";
+                            echo $option;
+                        }
+
+
+                        ?>
+                        <!-- <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option> -->
                     </select>
                 </dd>
             </dl>

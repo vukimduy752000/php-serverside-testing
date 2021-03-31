@@ -13,7 +13,7 @@ $subjects_set = query_all_values_order_by("subjects", "position");
         <div class="subjects listing">
             <h1>Subjects</h1>
             <div class="actions">
-                <a href="<?php echo url_for("/staff/subjects/create_subject.php"); ?>">Create New Subject</a>
+                <a href="<?php echo url_for("/staff/subjects/create.php"); ?>">Create New Subject</a>
             </div>
 
             <table class="list">

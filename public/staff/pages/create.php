@@ -27,7 +27,7 @@ if (is_request("post")) {
 
     <div class="subject new">
         <h1>Create page</h1>
-        <form action="<?php echo url_for("/staff/pages/create_page.php"); ?>" method="post">
+        <form action="<?php echo url_for("/staff/pages/create.php"); ?>" method="post">
             <dl>
                 <dt>Page Name</dt>
                 <dd><input type="text" name="menu_name" value="<?php echo secure_http($menu_name); ?>" /></dd>
