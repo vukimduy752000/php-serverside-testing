@@ -7,12 +7,14 @@ if (is_request("post")) {
     $position = $_POST["position"] ?? "";
     $visible = $_POST["visible"] ?? "";
 
-    if (query_insert_subject("subjects", $menu_name, $position, $visible)) {
-        $new_id = mysqli_insert_id($db);
-        redirect_page_to(url_for("/staff/subjects/show.php?id=" . secure_http($new_id)));
-    } else {
-        redirect_page_to(url_for("/staff/subjects/index.php"));
-    }
+    //! EXPERIMENT 
+    // if (query_insert_record("subjects", $subject)) {
+    //     $new_id = mysqli_insert_id($db);
+    //     redirect_page_to(url_for("/staff/subjects/show.php?id=" . secure_http($new_id)));
+    // } else {
+    //     redirect_page_to(url_for("/staff/subjects/index.php"));
+    // }
+} else {
 }
 
 ?>
