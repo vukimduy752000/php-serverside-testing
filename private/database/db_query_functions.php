@@ -10,6 +10,8 @@ function query_all_values_order_by($table, $orderby)
     return $result_set;
 }
 
+
+
 /** QUERY VALUE DEPEND ON CONDITION */
 function query_find_value_by_id($table, $value)
 {
@@ -22,6 +24,8 @@ function query_find_value_by_id($table, $value)
     mysqli_free_result($result_set);
     return $result_array;
 }
+
+
 
 /** INSERT NEW SUBJECT */
 function query_insert_record($table, $assoc_object)
@@ -55,6 +59,8 @@ function query_insert_record($table, $assoc_object)
     }
 }
 
+
+
 /** UPDATE SUBJECT  */
 function query_update_value_where_id($table, $assoc_object)
 {
@@ -82,14 +88,4 @@ function query_update_value_where_id($table, $assoc_object)
         db_disconnect($db);
         exit();
     }
-}
-
-/** SHOW COLUMNS FROM TABLE */
-function query_show_columns_name_from_table($table)
-{
-    global $db;
-    $query  = "SHOW COLUMNS FROM $table";
-
-    // Will return the result_set
-    $result =  mysqli_query($db, $query);
 }
