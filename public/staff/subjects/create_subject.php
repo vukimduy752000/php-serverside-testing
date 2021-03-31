@@ -3,18 +3,22 @@
 require_once("../../../private/initialize.php");
 
 if (is_request("post")) {
-    $menu_name = $_POST["menu_name"] ?? "";
-    $position = $_POST["position"] ?? "";
-    $visible = $_POST["visible"] ?? "";
+    $subject["menu_name"] = $_POST["menu_name"] ?? "";
+    $subject["position"] = $_POST["position"] ?? "";
+    $subject["visible"] = $_POST["visible"] ?? "";
 
-    //! EXPERIMENT 
-    // if (query_insert_record("subjects", $subject)) {
-    //     $new_id = mysqli_insert_id($db);
-    //     redirect_page_to(url_for("/staff/subjects/show.php?id=" . secure_http($new_id)));
-    // } else {
-    //     redirect_page_to(url_for("/staff/subjects/index.php"));
-    // }
+    if (query_insert_record("subjects", $subject)) {
+        $new_id = mysqli_insert_id($db);
+        redirect_page_to(url_for("/staff/subjects/show.php?id=" . secure_http($new_id)));
+    } else {
+        redirect_page_to(url_for("/staff/subjects/index.php"));
+    }
 } else {
+    $subject = [
+        "menu_name" => "",
+        "position"  => "",
+        "visible"   => ""
+    ];
 }
 
 ?>
@@ -33,7 +37,7 @@ if (is_request("post")) {
         <form action=" <?php echo url_for("/staff/subjects/create_subject.php") ?>" method="post">
             <dl>
                 <dt>Menu Name</dt>
-                <dd><input type="text" name="menu_name" value="" /></dd>
+                <dd><input type="text" name="menu_name" /></dd>
             </dl>
             <dl>
                 <dt>Position</dt>

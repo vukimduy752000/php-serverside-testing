@@ -21,8 +21,6 @@ if (is_request("post")) {
 }
 
 
-
-
 ?>
 
 <!-- HTMl -->

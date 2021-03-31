@@ -33,14 +33,15 @@ function query_insert_record($table, $assoc_object)
     $last_key = array_key_last($assoc_object);
     foreach ($assoc_object as $key => $value) {
         $query_into  .= $key . ",";
-        $query_value .= $value . ",";
+        $query_value .= "'" . $value . "',";
 
         if ($key == $last_key) {
-            $query_into[strlen($query_into) - 1] = ") ";
+            $query_into[strlen($query_into) - 1] = ")";
             $query_value[strlen($query_value) - 1] = ")";
         }
     }
-    $query = $query_into . $query_value;
+    $query = $query_into . " " . $query_value;
+    echo $query;
 
     // INSERT statement will return true/false
     $response = mysqli_query($db, $query);
