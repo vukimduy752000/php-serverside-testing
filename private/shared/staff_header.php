@@ -15,6 +15,7 @@ if (!isset($page_title)) {
         </title>
         <meta charset="utf-8">
         <link type="text/css" rel="stylesheet" href="<?php echo url_for("/stylesheets/staff.css") ?>">
+        <script type="text/javascript" src="<?php echo url_for("/js/index.js") ?>"></script>
 
     <body>
         <header>

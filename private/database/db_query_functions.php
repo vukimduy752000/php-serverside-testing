@@ -17,7 +17,7 @@ function query_find_value_by_id($table, $value)
 {
     global $db;
     $query  =  "SELECT * FROM $table 
-                WHERE id='" . $value . "'";
+                WHERE id='" . $value . "' " . "LIMIT 1";
     $result_set = mysqli_query($db, $query);
     db_confirm_query($result_set);
     $result_array = mysqli_fetch_assoc($result_set);
@@ -77,7 +77,7 @@ function query_update_value_where_id($table, $assoc_object)
         }
     }
 
-    $query .= "WHERE id='" . $assoc_object["id"] . "'";
+    $query .= "WHERE id='" . $assoc_object["id"] . "' LIMIT 1";
     $result = mysqli_query($db, $query);
 
     // RESULT form UPDATE will return true/false
@@ -102,4 +102,25 @@ function query_quantity_row_count_condition($table, $condition)
     mysqli_free_result($result_set);
 
     return $result[0];
+}
+
+
+/** DELETE RECORD BASED ON ID */
+function query_delete_record($table, $value)
+{
+    global $db;
+    $query  = "DELETE FROM $table ";
+    $query .= "WHERE id='" . $value . "' ";
+    $query .= "LIMIT 1";
+
+    echo $query;
+
+    $result = mysqli_query($db, $query);
+    if ($result) {
+        return true;
+    } else {
+        echo mysqli_error($db);
+        db_disconnect($db);
+        exit();
+    }
 }

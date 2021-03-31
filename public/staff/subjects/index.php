@@ -38,7 +38,9 @@ $subjects_set = query_all_values_order_by("subjects", "position");
                     <td><a class="action"
                             href="<?php echo url_for("staff/subjects/edit.php?id=" . $subject["id"]); ?>">Edit</a>
                     </td>
-                    <td><a class="action" href="">Delete</a></td>
+                    <td><a id="subject--delete" class="action"
+                            href="<?php echo url_for("staff/subjects/delete.php?id=" . $subject["id"]); ?>">Delete</a>
+                    </td>
                 </tr>
                 <?php } ?>
                 <?php mysqli_free_result($subjects_set); ?>
