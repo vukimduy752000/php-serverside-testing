@@ -124,3 +124,21 @@ function query_delete_record($table, $value)
         exit();
     }
 }
+
+/** JOIN FOREIGN KEY TO PRIMARY KEY */
+function query_all_value_join_child_table(array $parent, array $child)
+{
+    global $db;
+    $parentGet  = $parent["table"] . "." . $parent["valueToGet"];
+    $childGet   = $child["table"]  . "." . $child["valueToGet"];
+    $parentJoin = $parent["table"] . "." . $parent["valueToJoin"];
+    $childJoin  = $child["table"]  . "." . $child["valueToJoin"];
+
+    $query  = "SELECT $parentGet, $childGet FROM {$parent['table']} ";
+    $query .= "JOIN {$child['table']} ON $parentJoin = $childJoin";
+
+    $result_set = mysqli_query($db, $query);
+
+    db_confirm_query($result_set);
+    return $result_set;
+}
