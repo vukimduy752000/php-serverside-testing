@@ -46,12 +46,11 @@ $pages = query_all_values_order_by("pages", "position");
                     </td>
                     <td><a class="action" href=<?php echo url_for("/staff/pages/edit.php?id=" . $page["id"]) ?>>Edit</a>
                     </td>
-                    <td><a class="action" href="">Delete</a></td>
+                    <td><a class="action"
+                            href=<?php echo url_for("/staff/pages/delete.php?id=" . $page["id"]) ?>>Delete</a></td>
                 </tr>
                 <?php } ?>
-
                 <?php mysqli_free_result($pages); ?>
-
             </table>
         </div>
     </div>
