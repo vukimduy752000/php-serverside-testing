@@ -1,28 +1,22 @@
 <?php
 require_once("../../../private/initialize.php");
 
+$id = $_GET["id"] ?? "1";
 
 if (is_request("post")) {
+    $page["id"] = $id;
     $page["subject_id"]  = $_POST["subject_id"] ?? "";
     $page["menu_name"]   = $_POST["menu_name"] ?? "";
     $page["position"]    = $_POST["position"] ?? "";
-    $page["visible"]    = $_POST["visible"] ?? "";
-    $page["content"]    = $_POST["content"] ?? "";
+    $page["visible"]     = $_POST["visible"] ?? "";
+    $page["content"]     = $_POST["content"] ?? "";
 
     // Insert record into the table
-    if (query_insert_record("pages", $page)) {
+    if (query_update_value_where_id("pages", $page)) {
         redirect_page_to(url_for("/staff/pages/show.php?id=" . $page["id"]));
-    } else {
-        redirect_page_to(url_for("/staff/pages/create.php"));
     }
 } else {
-    $page = [
-        "menu_name"  => "",
-        "subject_id" => "",
-        "position"   => query_quantity_row_count_condition("pages", "position") + 1,
-        "visible"    => "",
-        "content"    => "",
-    ];
+    $page = query_find_value_by_id("pages", $id);
 }
 
 ?>
@@ -34,8 +28,8 @@ if (is_request("post")) {
     <a class="back-link" href="<?php echo url_for("/staff/pages/index.php") ?>">&#171 Back to Staff Area</a>
 
     <div class="subject new">
-        <h1>Create page</h1>
-        <form action="<?php echo url_for("/staff/pages/create.php"); ?>" method="post">
+        <h1>Edit page</h1>
+        <form action="<?php echo url_for("/staff/pages/edit.php?id=" . secure_http($page["id"])); ?>" method="post">
             <dl>
                 <dt>Page Name</dt>
                 <dd><input type="text" name="menu_name" value="<?php echo secure_http($page["menu_name"]); ?>" /></dd>
@@ -45,7 +39,7 @@ if (is_request("post")) {
                 <dd>
                     <select name="position">
                         <?php
-                        for ($i = 1; $i <= $page["position"]; $i++) {
+                        for ($i = 1; $i <= query_quantity_row_count_condition("pages", "position"); $i++) {
                             echo "<option value=\"{$i}\" ";
                             if ($i == $page["position"]) {
                                 echo "selected";

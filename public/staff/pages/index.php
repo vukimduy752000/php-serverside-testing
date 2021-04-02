@@ -44,7 +44,8 @@ $pages = query_all_values_order_by("pages", "position");
                             href=" <?php echo url_for("/staff/pages/show.php?id=" . htmlspecialchars(urlencode($page["id"]))); ?>">View
                             Page</a>
                     </td>
-                    <td><a class="action" href="">Edit</a></td>
+                    <td><a class="action" href=<?php echo url_for("/staff/pages/edit.php?id=" . $page["id"]) ?>>Edit</a>
+                    </td>
                     <td><a class="action" href="">Delete</a></td>
                 </tr>
                 <?php } ?>

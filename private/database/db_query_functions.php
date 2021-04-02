@@ -79,7 +79,7 @@ function query_update_value_where_id($table, $assoc_object)
 
     $query .= "WHERE id='" . $assoc_object["id"] . "' LIMIT 1";
     $result = mysqli_query($db, $query);
-
+    echo $query;
     // RESULT form UPDATE will return true/false
     if ($result) {
         return true;
