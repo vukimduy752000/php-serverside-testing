@@ -37,3 +37,9 @@ function db_confirm_query($result)
         exit("Cannot retrieve back the result from database. Please check the query string or database connection again!");
     }
 }
+
+/** Escape the special character in the string */
+function db_escape($link, $string)
+{
+    return mysqli_real_escape_string($link, $string);
+}

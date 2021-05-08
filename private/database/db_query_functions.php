@@ -16,8 +16,9 @@ function query_all_values_order_by($table, $orderby)
 function query_find_value_by_id($table, $value)
 {
     global $db;
-    $query  =  "SELECT * FROM $table 
-                WHERE id='" . $value . "' " . "LIMIT 1";
+    $query  =  "SELECT * FROM $table ";
+    $query .=  "WHERE id='" .  db_escape($db, $value) . "' " . "LIMIT 1";
+    echo $query;
     $result_set = mysqli_query($db, $query);
     db_confirm_query($result_set);
     $result_array = mysqli_fetch_assoc($result_set);
@@ -36,8 +37,8 @@ function query_insert_record($table, $assoc_object)
 
     $last_key = array_key_last($assoc_object);
     foreach ($assoc_object as $key => $value) {
-        $query_into  .= $key . ",";
-        $query_value .= "'" . $value . "',";
+        $query_into  .= db_escape($db, $key) . ",";
+        $query_value .= "'" . db_escape($db, $value) . "',";
 
         if ($key == $last_key) {
             $query_into[strlen($query_into) - 1] = ")";
@@ -71,13 +72,13 @@ function query_update_value_where_id($table, $assoc_object)
     // Using loop to iterate 
     $last_key = array_key_last($assoc_object);
     foreach ($assoc_object as $key => $value) {
-        $query .= "$key='" . $value . "',";
+        $query .= "$key='" . db_escape($db, $value) . "',";
         if ($key == $last_key) {
             $query[strlen($query) - 1] = " ";
         }
     }
 
-    $query .= "WHERE id='" . $assoc_object["id"] . "' LIMIT 1";
+    $query .= "WHERE id='" . db_escape($db, $assoc_object["id"])  . "' LIMIT 1";
     $result = mysqli_query($db, $query);
     echo $query;
     // RESULT form UPDATE will return true/false
@@ -110,7 +111,7 @@ function query_delete_record($table, $value)
 {
     global $db;
     $query  = "DELETE FROM $table ";
-    $query .= "WHERE id='" . $value . "' ";
+    $query .= "WHERE id='" . db_escape($db, $value) . "' ";
     $query .= "LIMIT 1";
 
     echo $query;
