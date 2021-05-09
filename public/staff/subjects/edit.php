@@ -3,7 +3,6 @@
 <?php include(SHARED_PATH . '/staff_header.php'); ?>
 
 <?php
-
 $id = $_GET["id"] ?? "";
 
 // POST information into the database
@@ -19,7 +18,6 @@ if (is_request("post")) {
 } else {
     $subject = query_find_value_by_id("subjects", $id);
 }
-
 ?>
 
 <!-- HTMl -->

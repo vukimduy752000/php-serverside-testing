@@ -18,7 +18,6 @@ function query_find_value_by_id($table, $value)
     global $db;
     $query  =  "SELECT * FROM $table ";
     $query .=  "WHERE id='" .  db_escape($db, $value) . "' " . "LIMIT 1";
-    echo $query;
     $result_set = mysqli_query($db, $query);
     db_confirm_query($result_set);
     $result_array = mysqli_fetch_assoc($result_set);
@@ -46,7 +45,6 @@ function query_insert_record($table, $assoc_object)
         }
     }
     $query = $query_into . " " . $query_value;
-    echo $query;
 
     // INSERT statement will return true/false
     $response = mysqli_query($db, $query);
@@ -80,7 +78,6 @@ function query_update_value_where_id($table, $assoc_object)
 
     $query .= "WHERE id='" . db_escape($db, $assoc_object["id"])  . "' LIMIT 1";
     $result = mysqli_query($db, $query);
-    echo $query;
     // RESULT form UPDATE will return true/false
     if ($result) {
         return true;
@@ -113,8 +110,6 @@ function query_delete_record($table, $value)
     $query  = "DELETE FROM $table ";
     $query .= "WHERE id='" . db_escape($db, $value) . "' ";
     $query .= "LIMIT 1";
-
-    echo $query;
 
     $result = mysqli_query($db, $query);
     if ($result) {

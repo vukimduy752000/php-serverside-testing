@@ -7,6 +7,7 @@ $subjects_set = query_all_values_order_by("subjects", "position");
 <?php $page_title = "Staff Subject" ?>
 <?php include(SHARED_PATH . '/staff_header.php'); ?>
 
+
 <!-- MAIN -->
 <main>
     <div id=content>
@@ -28,22 +29,18 @@ $subjects_set = query_all_values_order_by("subjects", "position");
                 </tr>
 
                 <?php while ($subject = mysqli_fetch_assoc($subjects_set)) { ?>
-                <tr>
-                    <td><?php echo $subject['id']; ?></td>
-                    <td><?php echo $subject['position']; ?></td>
-                    <td><?php echo $subject['visible'] == 1 ? 'true' : 'false'; ?></td>
-                    <td><?php echo $subject['menu_name']; ?></td>
-                    <td><a class=" action"
-                            href="<?php echo url_for("staff/subjects/show.php?id=" . $subject['id']); ?>">View</a></td>
-                    <td><a class="action"
-                            href="<?php echo url_for("staff/subjects/edit.php?id=" . $subject["id"]); ?>">Edit</a>
-                    </td>
-                    <td><a id="subject--delete" class="action"
-                            href="<?php echo url_for("staff/subjects/delete.php?id=" . $subject["id"]); ?>">Delete</a>
-                    </td>
-                </tr>
-                <?php } ?>
-                <?php mysqli_free_result($subjects_set); ?>
+                    <tr>
+                        <td><?php echo $subject['id']; ?></td>
+                        <td><?php echo $subject['position']; ?></td>
+                        <td><?php echo $subject['visible'] == 1 ? 'true' : 'false'; ?></td>
+                        <td><?php echo $subject['menu_name']; ?></td>
+                        <td><a class=" action" href="<?php echo url_for("staff/subjects/show.php?id=" . $subject['id']); ?>">View</a></td>
+                        <td><a class="action" href="<?php echo url_for("staff/subjects/edit.php?id=" . $subject["id"]); ?>">Edit</a></td>
+                        <td><a id="subject--delete" class="action" href="<?php echo url_for("staff/subjects/delete.php?id=" . $subject["id"]); ?>">Delete</a></td>
+                    </tr>
+                <?php };
+                mysqli_free_result($subjects_set); ?>
+
             </table>
         </div>
     </div>

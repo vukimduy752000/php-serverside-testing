@@ -86,8 +86,7 @@ if (is_request("post")) {
             <dl>
                 <dt>Content</dt>
                 <dd>
-                    <textarea name="content" rows="4" cols="13" placeholder="Type the content in here..."
-                        maxlength="100" required></textarea>
+                    <textarea name="content" rows="4" cols="13" placeholder="Type the content in here..." maxlength="100" required></textarea>
                 </dd>
             </dl>
             <div id="operations">

@@ -1,13 +1,15 @@
 <?php
-
 require_once("../../../private/initialize.php");
+$page_title = 'Create Subject';
+require_once(SHARED_PATH .  '/staff_header.php');
+
 
 if (is_request("post")) {
-    $subject["menu_name"] = $_POST["menu_name"] ?? "";
-    $subject["position"] = $_POST["position"] ?? "";
-    $subject["visible"] = $_POST["visible"] ?? "";
+    $subject[SUBJECT_MENU_NAME] = $_POST[SUBJECT_MENU_NAME] ?? "";
+    $subject[SUBJECT_POSITION]  = $_POST[SUBJECT_POSITION] ?? "";
+    $subject[SUBJECT_VISIBLE]   = $_POST[SUBJECT_VISIBLE] ?? "";
 
-    if (query_insert_record("subjects", $subject)) {
+    if (query_insert_record(TABLE_SUBJECT, $subject)) {
         $new_id = mysqli_insert_id($db);
         redirect_page_to(url_for("/staff/subjects/show.php?id=" . secure_http($new_id)));
     } else {
@@ -17,24 +19,19 @@ if (is_request("post")) {
     // Set subject postion is the count(row) + 1 by default
     $subject = [
         "menu_name" => "",
-        "position"  => query_quantity_row_count_condition("subjects", "position") + 1,
+        "position"  => query_quantity_row_count_condition(TABLE_SUBJECT, SUBJECT_POSITION) + 1,
         "visible"   => ""
     ];
 }
 
 ?>
-<?php $page_title = 'Create Subject'; ?>
-<?php include(SHARED_PATH . '/staff_header.php'); ?>
 
 
 <!-- HTMl -->
 <div id="content">
-
     <a class="back-link" href="<?php echo url_for('/staff/subjects/index.php'); ?>">&laquo; Back to List</a>
-
     <div class="subject new">
         <h1>Create Subject</h1>
-
         <form action=" <?php echo url_for("/staff/subjects/create.php") ?>" method="post">
             <dl>
                 <dt>Menu Name</dt>

@@ -8,11 +8,31 @@ ob_start();
 //! | Can not import the PRIVATE_PATH . initializer.php to other file cuz this is the initial file
 //  |===============================================/ 
 
-define("PRIVATE_PATH", dirname(__FILE__));
-define("PROJECT_PATH", dirname(PRIVATE_PATH));
-define("PUBLIC_PATH", PROJECT_PATH . "/public");
-define("SHARED_PATH", PRIVATE_PATH . "/shared");
+/**
+ * Private
+ *  - database
+ *  - shared
+ *      - utility
+ * Public
+ *  - script
+ *  - staff
+ *      - pages
+ *      - subjects
+ *  - stylesheets
+ */
+
+define("PRIVATE_PATH", dirname(__FILE__)); // return the dir of the current file which is PRIVATE 
+define("PROJECT_PATH", dirname(PRIVATE_PATH)); // Move backward 1 dir further of the directory 
 define("DATABASE_PATH", PRIVATE_PATH . "/database");
+define("SHARED_PATH", PRIVATE_PATH . "/shared");
+define("UTILITY_PATH", SHARED_PATH . "/utility");
+
+define("PUBLIC_PATH", PROJECT_PATH . "/public");
+define("SCRIPT_PATH", PUBLIC_PATH . "/script");
+define("STAFF_PATH", PUBLIC_PATH . "/staff");
+define("STYLESHEET_PATH", PUBLIC_PATH . "/stylesheet");
+
+
 
 
 //  |===============================================/ 
@@ -24,7 +44,6 @@ define("DATABASE_PATH", PRIVATE_PATH . "/database");
 //  |define("WWW_ROOT", '');
 //  |* Can dynamically find everything in URL up to "/public"
 //  |===============================================/ 
-
 // * Can dynamically find everything in URL up to "/public"
 $public_end = strpos($_SERVER['SCRIPT_NAME'], '/public') + 7;
 $doc_root = substr($_SERVER['SCRIPT_NAME'], 0, $public_end);
@@ -33,10 +52,12 @@ define("WWW_ROOT", $doc_root);
 
 
 
-require_once('functions.php');
 //  |===============================================/ 
-//  | Initialize the Database's ultilities
+//  | Require all private files
 //  |===============================================/ 
-require_once(DATABASE_PATH . "/db.php");
-require_once(DATABASE_PATH . "/db_query_functions.php");
+require_once(DATABASE_PATH . "/db_connection.php");
+require_once(DATABASE_PATH . "/db_query.php");
+require_once(UTILITY_PATH  . "/functions.php");
+require_once(UTILITY_PATH  . "/validation.php");
+require_once(UTILITY_PATH  . "/constant.php");
 $db = db_connect();

@@ -10,7 +10,6 @@ $subject = query_find_value_by_id("subjects", $id);
 
 <!-- HTMl -->
 <div id="content">
-
     <a class="back-link" href="<?php echo url_for('/staff/subjects/index.php'); ?>">&laquo; Back to List</a>
 
     <h1>Subject: <?php echo secure_http($subject['menu_name']); ?></h1>
@@ -30,3 +29,4 @@ $subject = query_find_value_by_id("subjects", $id);
         </dl>
     </div>
 </div>
+

@@ -1,4 +1,6 @@
 <?php
+
+//** Extract URL To the specific path */
 function url_for(string $script_path)
 {
     // add the leading '/' if not present
@@ -9,28 +11,29 @@ function url_for(string $script_path)
 }
 
 
+//** Check Error Not Found */
 function error_404()
 {
     header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found");
 }
 
+
+//** Check Error Not Found */
 function error_500()
 {
     header($_SERVER["SERVER_PROTOCOL"] . " 500 Internal Server Error");
 }
 
+
+//** Redirect page to the new location */
 function redirect_page_to(string $location)
 {
     header("Location: " . $location);
     exit("Page has been redirect successfully");
 }
 
-function secure_http(string $string)
-{
-    return htmlspecialchars(urlencode($string));
-}
 
-
+//** Checking the request's type comming from HTTP */ */
 function is_request(string $request_type)
 {
     return $_SERVER["REQUEST_METHOD"] == strtoupper($request_type);

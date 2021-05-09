@@ -19,7 +19,7 @@ function db_disconnect($link)
 }
 
 
-/** Check database connectio */
+/** Check database connection */
 function db_confirm_connection()
 {
     if (mysqli_connect_errno()) {
