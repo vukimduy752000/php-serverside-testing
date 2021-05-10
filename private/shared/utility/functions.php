@@ -38,3 +38,19 @@ function is_request(string $request_type)
 {
     return $_SERVER["REQUEST_METHOD"] == strtoupper($request_type);
 }
+
+
+//** Display Errors */
+//** Default value is the empty array */
+function display_errors($errors = array())
+{
+    $output = "";
+    if ($errors) {
+        $output  = "<ul " . "class=\"errors\"" . ">";
+        foreach ($errors as $error => $value) {
+            $output .= "<li>" . htmlspecialchars($value) . "</li>";
+        }
+        $output .= "</ul>";
+    }
+    return $output;
+}

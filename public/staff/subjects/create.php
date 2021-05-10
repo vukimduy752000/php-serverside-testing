@@ -3,7 +3,6 @@ require_once("../../../private/initialize.php");
 $page_title = 'Create Subject';
 require_once(SHARED_PATH .  '/staff_header.php');
 
-
 if (is_request("post")) {
     $subject[SUBJECT_MENU_NAME] = $_POST[SUBJECT_MENU_NAME] ?? "";
     $subject[SUBJECT_POSITION]  = $_POST[SUBJECT_POSITION] ?? "";
@@ -16,7 +15,7 @@ if (is_request("post")) {
         redirect_page_to(url_for("/staff/subjects/index.php"));
     }
 } else {
-    // Set subject postion is the count(row) + 1 by default
+    // Always create a new one, count(position) + 1
     $subject = [
         "menu_name" => "",
         "position"  => query_quantity_row_count_condition(TABLE_SUBJECT, SUBJECT_POSITION) + 1,
@@ -41,6 +40,7 @@ if (is_request("post")) {
                 <dt>Position</dt>
                 <dd>
                     <select name="position">
+                        <!-- Inject position's option from the database -->
                         <?php
                         for ($i = 1; $i <= $subject["position"]; $i++) {
                             $option = "";

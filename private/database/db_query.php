@@ -1,10 +1,12 @@
 <?php
 
+use function PHPSTORM_META\type;
+
 /** QUERY ALL VALUES*/
 function query_all_values_order_by($table, $orderby)
 {
     global $db;
-    $query = "SELECT * FROM $table ORDER BY $orderby DESC";
+    $query =  "SELECT * FROM $table ORDER BY $orderby DESC";
     $result_set = mysqli_query($db, $query);
     db_confirm_query($result_set);
     return $result_set;
@@ -60,10 +62,21 @@ function query_insert_record($table, $assoc_object)
 
 
 
-/** UPDATE SUBJECT  */
+/** UPDATE SUBJECT  
+ *  Error handling is in the scope of this assignment
+ *  The query function is not generic 
+ */
+
 function query_update_value_where_id($table, $assoc_object)
 {
     global $db;
+
+    $errors = validate_subject($assoc_object);
+    if (!empty($errors)) {
+        return $errors;
+    }
+
+
     $query  = "UPDATE $table ";
     $query .= "SET ";
 
@@ -103,6 +116,7 @@ function query_quantity_row_count_condition($table, $condition)
 }
 
 
+
 /** DELETE RECORD BASED ON ID */
 function query_delete_record($table, $value)
 {
@@ -121,6 +135,8 @@ function query_delete_record($table, $value)
     }
 }
 
+
+
 /** JOIN FOREIGN KEY TO PRIMARY KEY */
 function query_all_value_join_child_table(array $parent, array $child)
 {
@@ -137,4 +153,41 @@ function query_all_value_join_child_table(array $parent, array $child)
 
     db_confirm_query($result_set);
     return $result_set;
+}
+
+
+
+/** VALIDATE USER'S INPUT AFTER SUBMITTIMG TO THE DB QUERY */
+/** Assess the subject input regardless of the scope of this project */
+function validate_subject($subject)
+{
+
+    $errors = [];
+
+    // Check Menu Name is empty or not
+    if (!has_presence($subject[SUBJECT_MENU_NAME])) {
+        $errors[] = "Name cannot be blank.";
+    }
+
+    // Check if menu name is alreay existed or not
+    if (!has_unique_page_menu_name(TABLE_SUBJECT, $subject[SUBJECT_MENU_NAME], $subject["id"])) {
+        $errors[] = "Name is already existed.";
+    }
+
+    // Check the length of the string
+    elseif (!has_length($subject[SUBJECT_MENU_NAME], ["min" => 8, "max" => 16])) {
+        $errors[] = "Name's length must be in between 8 and 16 characters";
+    }
+
+    // Check the presence of Position
+    if (!has_presence($subject[SUBJECT_POSITION])) {
+        $errors[] = "Position cannot be blank";
+    }
+
+    // Check the presence of Visible
+    if (!has_inclusion_of((int)$subject[SUBJECT_VISIBLE], [0, 1])) {
+        $errors[] = "Visible must be 0 or 1";
+    }
+
+    return $errors;
 }

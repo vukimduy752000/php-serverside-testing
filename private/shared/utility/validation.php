@@ -11,6 +11,8 @@ function is_blank($value)
     return !isset($value) || trim($value) === '' || empty($value);
 }
 
+
+
 // has_presence('abcd')
 // * validate data presence
 // * reverse of is_blank()
@@ -19,6 +21,8 @@ function has_presence($value)
 {
     return !is_blank($value);
 }
+
+
 
 // has_length_greater_than('abcd', 3)
 // * validate string length
@@ -30,6 +34,8 @@ function has_length_greater_than($value, $min)
     return $length > $min;
 }
 
+
+
 // has_length_less_than('abcd', 5)
 // * validate string length
 // * spaces count towards length
@@ -39,6 +45,8 @@ function has_length_less_than($value, $max)
     $length = strlen($value);
     return $length < $max;
 }
+
+
 
 // has_length_exactly('abcd', 4)
 // * validate string length
@@ -50,8 +58,11 @@ function has_length_exactly($value, $exact)
     return $length == $exact;
 }
 
+
+
 // has_length('abcd', ['min' => 3, 'max' => 5])
 // * validate string length
+// * max, min values are exclusive
 // * combines functions_greater_than, _less_than, _exactly
 // * spaces count towards length
 // * use trim() if spaces should not count
@@ -68,19 +79,27 @@ function has_length($value, $options)
     }
 }
 
+
+
 // has_inclusion_of( 5, [1,3,5,7,9] )
 // * validate inclusion in a set
+// * check the value's existence in the array
 function has_inclusion_of($value, $set)
 {
     return in_array($value, $set);
 }
 
+
+
 // has_exclusion_of( 5, [1,3,5,7,9] )
 // * validate exclusion from a set
+// * check the value's existence in the array
 function has_exclusion_of($value, $set)
 {
     return !in_array($value, $set);
 }
+
+
 
 // has_string('nobody@nowhere.com', '.com')
 // * validate inclusion of character(s)
@@ -91,6 +110,8 @@ function has_string($value, $required_string)
 {
     return strpos($value, $required_string) !== false;
 }
+
+
 
 // has_valid_email_format('nobody@nowhere.com')
 // * validate correct format for email addresses
@@ -103,6 +124,39 @@ function has_valid_email_format($value)
     $email_regex = '/\A[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\Z/i';
     return preg_match($email_regex, $value) === 1;
 }
+
+
+// has_unique_page_menu_name("subjects", "vukim")
+// * validate the existence of the value within the menu_name column
+//    returns true for 0 match, false for having a match
+function has_unique_page_menu_name($table, $menu_name, $subject_id)
+{
+    global $db;
+
+    $query  = "SELECT " . SUBJECT_MENU_NAME . " ";
+    $query .= "FROM $table ";
+    $query .= "WHERE " . SUBJECT_MENU_NAME . " LIKE CONCAT(?) ";
+    $query .= "AND id != ?;";
+
+    $stmt = mysqli_prepare($db, $query);
+    if ($stmt) {
+        mysqli_stmt_bind_param($stmt, 'ss', $menu_name, $subject_id);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_store_result($stmt);
+        $rowsReturn = mysqli_stmt_num_rows($stmt);
+
+        if ($rowsReturn === 0) {
+            return true;
+        } else {
+            mysqli_stmt_free_result($stmt);
+            mysqli_stmt_close($stmt);
+            return false;
+        }
+    } else {
+        exit("Something went wrong");
+    }
+}
+
 
 
 // secure_http("/index.php?name=Kim-Duy)

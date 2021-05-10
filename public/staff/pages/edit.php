@@ -12,8 +12,11 @@ if (is_request("post")) {
     $page["content"]     = $_POST["content"] ?? "";
 
     // Insert record into the table
-    if (query_update_value_where_id("pages", $page)) {
+    $result = query_update_value_where_id("pages", $page);
+    if ($result === true) {
         redirect_page_to(url_for("/staff/pages/show.php?id=" . $page["id"]));
+    } else {
+        var_dump($result);
     }
 } else {
     $page = query_find_value_by_id("pages", $id);
@@ -80,8 +83,7 @@ if (is_request("post")) {
             <dl>
                 <dt>Content</dt>
                 <dd>
-                    <textarea name="content" rows="4" cols="13" placeholder="Type the content in here..."
-                        maxlength="100" required></textarea>
+                    <textarea name="content" rows="4" cols="13" placeholder="Type the content in here..." maxlength="100" required></textarea>
                 </dd>
             </dl>
             <div id="operations">

@@ -12,7 +12,6 @@
                     <li><a href="<?php echo url_for("staff/pages/index.php") ?>">Pages</a></li>
                 </ul>
             </nav>
-
         </div>
     </div>
 </main>
